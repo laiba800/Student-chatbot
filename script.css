@@ -1,0 +1,32 @@
+function sendMessage(){
+
+  let input = document.getElementById("userInput").value;
+
+  let chatbox = document.getElementById("chatbox");
+
+  chatbox.innerHTML += "<p><b>You:</b> " + input + "</p>";
+
+  let response = "";
+
+  input = input.toLowerCase();
+
+  if(input.includes("hello")){
+    response = "Hello Student!";
+  }
+
+  else if(input.includes("oop")){
+    response = "OOP means Object Oriented Programming.";
+  }
+
+  else if(input.includes("html")){
+    response = "HTML is used to create webpages.";
+  }
+
+  else{
+    response = "Sorry, I don't understand.";
+  }
+
+  chatbox.innerHTML += "<p><b>Bot:</b> " + response + "</p>";
+
+  document.getElementById("userInput").value = "";
+}
