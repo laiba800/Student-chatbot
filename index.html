@@ -1,21 +1,114 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Student Chatbot</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laiba AI - Talk with Laiba</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Include Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Include Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
 </head>
 <body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h2>Laiba AI</h2>
+                <button class="icon-btn close-sidebar" id="close-sidebar">
+                    <span class="material-icons-round">close</span>
+                </button>
+            </div>
+            <button class="new-chat-btn">
+                <span class="material-icons-round">add</span>
+                New Chat
+            </button>
+            <div class="chat-history">
+                <div class="history-item active">
+                    <span class="material-icons-round">chat_bubble_outline</span>
+                    <p>Current Conversation</p>
+                </div>
+                <div class="history-item">
+                    <span class="material-icons-round">chat_bubble_outline</span>
+                    <p>English Chat</p>
+                </div>
+                <div class="history-item">
+                    <span class="material-icons-round">chat_bubble_outline</span>
+                    <p>اردو گفتگو (Urdu Chat)</p>
+                </div>
+            </div>
+            <div class="sidebar-footer">
+                <div class="user-profile">
+                    <div class="user-avatar">U</div>
+                    <span>User</span>
+                </div>
+            </div>
+        </aside>
 
-  <div class="chat-container">
-    <h2>Student AI Chatbot</h2>
+        <!-- Main Chat Area -->
+        <main class="chat-container">
+            <header class="chat-header">
+                <div class="header-left">
+                    <button class="icon-btn menu-btn" id="menu-btn">
+                        <span class="material-icons-round">menu</span>
+                    </button>
+                    <div class="bot-info">
+                        <div class="bot-avatar">
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Laiba&backgroundColor=b6e3f4" alt="Laiba AI" />
+                            <div class="status-indicator online"></div>
+                        </div>
+                        <div class="bot-details">
+                            <h2>Laiba AI</h2>
+                            <p class="status-text">Online</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <button class="icon-btn" title="Voice Call">
+                        <span class="material-icons-round">call</span>
+                    </button>
+                    <button class="icon-btn" title="Video Call">
+                        <span class="material-icons-round">videocam</span>
+                    </button>
+                    <button class="icon-btn" title="More Options">
+                        <span class="material-icons-round">more_vert</span>
+                    </button>
+                </div>
+            </header>
 
-    <div id="chatbox"></div>
+            <div class="chat-window" id="chat-window">
+                <div class="message bot">
+                    <div class="message-content">
+                        Hello! I am Laiba AI. How can I help you today? <br>
+                        ہیلو! میں لائبہ اے آئی ہوں۔ میں آج آپ کی کیسے مدد کر سکتی ہوں؟
+                    </div>
+                    <div class="message-time">Just now</div>
+                </div>
+            </div>
 
-    <input type="text" id="userInput" placeholder="Ask something...">
-
-    <button onclick="sendMessage()">Send</button>
-  </div>
-
-  <script src="script.js"></script>
+            <footer class="chat-input-area">
+                <button class="icon-btn attach-btn" title="Attach File">
+                    <span class="material-icons-round">attach_file</span>
+                </button>
+                <div class="input-wrapper">
+                    <button class="icon-btn emoji-btn" title="Add Emoji">
+                        <span class="material-icons-round">sentiment_satisfied_alt</span>
+                    </button>
+                    <input type="text" id="message-input" placeholder="Message Laiba AI... / لائبہ اے آئی کو پیغام بھیجیں..." autocomplete="off" />
+                    <button class="icon-btn voice-btn" title="Voice Message">
+                        <span class="material-icons-round">mic</span>
+                    </button>
+                </div>
+                <button id="send-button" class="send-btn" aria-label="Send Message">
+                    <span class="material-icons-round">send</span>
+                </button>
+            </footer>
+        </main>
+    </div>
+    
+    <script src="script.js"></script>
 </body>
 </html>
