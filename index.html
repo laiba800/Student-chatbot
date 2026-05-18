@@ -1,114 +1,630 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Laiba AI - Talk with Laiba</title>
-    <link rel="stylesheet" href="style.css">
-    <!-- Include Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Include Material Icons -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
-</head>
-<body>
-    <div class="app-container">
-        <!-- Sidebar -->
-        <aside class="sidebar" id="sidebar">
-            <div class="sidebar-header">
-                <h2>Laiba AI</h2>
-                <button class="icon-btn close-sidebar" id="close-sidebar">
-                    <span class="material-icons-round">close</span>
-                </button>
-            </div>
-            <button class="new-chat-btn">
-                <span class="material-icons-round">add</span>
-                New Chat
-            </button>
-            <div class="chat-history">
-                <div class="history-item active">
-                    <span class="material-icons-round">chat_bubble_outline</span>
-                    <p>Current Conversation</p>
-                </div>
-                <div class="history-item">
-                    <span class="material-icons-round">chat_bubble_outline</span>
-                    <p>English Chat</p>
-                </div>
-                <div class="history-item">
-                    <span class="material-icons-round">chat_bubble_outline</span>
-                    <p>اردو گفتگو (Urdu Chat)</p>
-                </div>
-            </div>
-            <div class="sidebar-footer">
-                <div class="user-profile">
-                    <div class="user-avatar">U</div>
-                    <span>User</span>
-                </div>
-            </div>
-        </aside>
-
-        <!-- Main Chat Area -->
-        <main class="chat-container">
-            <header class="chat-header">
-                <div class="header-left">
-                    <button class="icon-btn menu-btn" id="menu-btn">
-                        <span class="material-icons-round">menu</span>
-                    </button>
-                    <div class="bot-info">
-                        <div class="bot-avatar">
-                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Laiba&backgroundColor=b6e3f4" alt="Laiba AI" />
-                            <div class="status-indicator online"></div>
-                        </div>
-                        <div class="bot-details">
-                            <h2>Laiba AI</h2>
-                            <p class="status-text">Online</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="header-right">
-                    <button class="icon-btn" title="Voice Call">
-                        <span class="material-icons-round">call</span>
-                    </button>
-                    <button class="icon-btn" title="Video Call">
-                        <span class="material-icons-round">videocam</span>
-                    </button>
-                    <button class="icon-btn" title="More Options">
-                        <span class="material-icons-round">more_vert</span>
-                    </button>
-                </div>
-            </header>
-
-            <div class="chat-window" id="chat-window">
-                <div class="message bot">
-                    <div class="message-content">
-                        Hello! I am Laiba AI. How can I help you today? <br>
-                        ہیلو! میں لائبہ اے آئی ہوں۔ میں آج آپ کی کیسے مدد کر سکتی ہوں؟
-                    </div>
-                    <div class="message-time">Just now</div>
-                </div>
-            </div>
-
-            <footer class="chat-input-area">
-                <button class="icon-btn attach-btn" title="Attach File">
-                    <span class="material-icons-round">attach_file</span>
-                </button>
-                <div class="input-wrapper">
-                    <button class="icon-btn emoji-btn" title="Add Emoji">
-                        <span class="material-icons-round">sentiment_satisfied_alt</span>
-                    </button>
-                    <input type="text" id="message-input" placeholder="Message Laiba AI... / لائبہ اے آئی کو پیغام بھیجیں..." autocomplete="off" />
-                    <button class="icon-btn voice-btn" title="Voice Message">
-                        <span class="material-icons-round">mic</span>
-                    </button>
-                </div>
-                <button id="send-button" class="send-btn" aria-label="Send Message">
-                    <span class="material-icons-round">send</span>
-                </button>
-            </footer>
-        </main>
-    </div>
     
-    <script src="script.js"></script>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        dark: {
+                            900: '#0a0a0f',
+                            800: '#13131f',
+                            700: '#1f1f33',
+                            glass: 'rgba(19, 19, 31, 0.6)'
+                        },
+                        neon: {
+                            blue: '#00f0ff',
+                            purple: '#8a2be2'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        urdu: ['Jameel Noori Nastaleeq', 'Noto Nastaliq Urdu', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Material Symbols -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0" rel="stylesheet" />
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- React & ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    
+    <!-- Socket.IO Client -->
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+    
+    <!-- Babel for JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body class="transition-colors duration-300 bg-gray-100 dark:bg-[#0a0a0f]">
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+
+        const Icon = ({ name, className = "", onClick }) => (
+            <span className={`material-symbols-rounded select-none cursor-pointer ${className}`} onClick={onClick}>{name}</span>
+        );
+
+        const App = () => {
+            const [messages, setMessages] = useState([]);
+            const [inputValue, setInputValue] = useState('');
+            const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth >= 1024);
+            const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
+            const [language, setLanguage] = useState('EN');
+            const [isRecording, setIsRecording] = useState(false);
+            const [recordingTime, setRecordingTime] = useState(0);
+            const [isBotTyping, setIsBotTyping] = useState(false);
+            
+            // UI States
+            const [theme, setTheme] = useState('dark');
+            const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+            const [showAttachMenu, setShowAttachMenu] = useState(false);
+            
+            // Call States
+            const [callActive, setCallActive] = useState(false);
+            const [callType, setCallType] = useState('audio');
+            const [callTime, setCallTime] = useState(0);
+            const [isMuted, setIsMuted] = useState(false);
+            
+            const messagesEndRef = useRef(null);
+            const fileInputRef = useRef(null);
+            const cameraInputRef = useRef(null);
+            const inputRef = useRef(null);
+            const socketRef = useRef(null);
+            const localVideoRef = useRef(null);
+            const mediaRecorderRef = useRef(null);
+            const audioChunksRef = useRef([]);
+
+            useEffect(() => {
+                const handleResize = () => {
+                    const mobile = window.innerWidth < 1024;
+                    setIsMobile(mobile);
+                    if (mobile) setIsSidebarOpen(false);
+                    else setIsSidebarOpen(true);
+                };
+                window.addEventListener('resize', handleResize);
+                return () => window.removeEventListener('resize', handleResize);
+            }, []);
+
+            useEffect(() => {
+                if (theme === 'dark') document.documentElement.classList.add('dark');
+                else document.documentElement.classList.remove('dark');
+            }, [theme]);
+
+            const scrollToBottom = () => {
+                messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+            };
+
+            useEffect(() => {
+                scrollToBottom();
+            }, [messages, isBotTyping]);
+
+            useEffect(() => {
+                socketRef.current = io('http://localhost:3000', { transports: ['websocket', 'polling'] });
+                
+                socketRef.current.on('history', (rows) => {
+                    const loaded = rows.map(r => ({
+                        ...r,
+                        time: new Date(r.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}),
+                        status: 'seen'
+                    }));
+                    setMessages(loaded);
+                });
+
+                socketRef.current.on('newMessage', (msg) => {
+                    setMessages(prev => {
+                        if (prev.find(m => m.id === msg.id)) return prev;
+                        return [...prev, {
+                            ...msg,
+                            time: new Date(msg.timestamp || Date.now()).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}),
+                            status: 'delivered'
+                        }];
+                    });
+                });
+
+                socketRef.current.on('typing', () => setIsBotTyping(true));
+                socketRef.current.on('stopTyping', () => setIsBotTyping(false));
+
+                return () => socketRef.current.disconnect();
+            }, []);
+
+            useEffect(() => {
+                if (!isMobile && inputRef.current) inputRef.current.focus();
+            }, [isMobile]);
+
+            const uploadFile = async (file) => {
+                const formData = new FormData();
+                formData.append('file', file);
+                try {
+                    const res = await fetch('http://localhost:3000/api/upload', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    if (res.ok) {
+                        return await res.json();
+                    }
+                } catch (err) {
+                    alert('Upload failed. Check backend connection.');
+                }
+                return null;
+            };
+
+            const handleFileUpload = async (e) => {
+                setShowAttachMenu(false);
+                const file = e.target?.files?.[0];
+                if (!file) return;
+                
+                const data = await uploadFile(file);
+                if (data && socketRef.current?.connected) {
+                    const isAudio = data.type === 'audio';
+                    const isImage = data.type === 'image';
+                    const msgData = {
+                        text: isAudio ? '' : (isImage ? '[Image Attached]' : `[File Attached: ${file.name}]`),
+                        urduText: isAudio ? '' : (isImage ? '[تصویر منسلک کی گئی]' : `[فائل منسلک کی گئی: ${file.name}]`),
+                        type: data.type,
+                        fileUrl: `http://localhost:3000${data.url}`,
+                        duration: isAudio ? 'Voice' : null
+                    };
+                    socketRef.current.emit('sendMessage', msgData);
+                }
+                e.target.value = ''; // reset
+            };
+
+            const toggleRecording = async () => {
+                if (isRecording) {
+                    mediaRecorderRef.current.stop();
+                    setIsRecording(false);
+                } else {
+                    try {
+                        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                        mediaRecorderRef.current = new MediaRecorder(stream);
+                        audioChunksRef.current = [];
+                        setRecordingTime(0);
+
+                        mediaRecorderRef.current.ondataavailable = e => {
+                            if (e.data.size > 0) audioChunksRef.current.push(e.data);
+                        };
+
+                        mediaRecorderRef.current.onstop = async () => {
+                            const blob = new Blob(audioChunksRef.current, { type: 'audio/webm' });
+                            const file = new File([blob], `voice_${Date.now()}.webm`, { type: 'audio/webm' });
+                            const data = await uploadFile(file);
+                            if (data && socketRef.current?.connected) {
+                                socketRef.current.emit('sendMessage', {
+                                    type: 'audio',
+                                    fileUrl: `http://localhost:3000${data.url}`,
+                                    duration: 'Voice'
+                                });
+                            }
+                            stream.getTracks().forEach(track => track.stop());
+                        };
+
+                        mediaRecorderRef.current.start();
+                        setIsRecording(true);
+                    } catch (e) {
+                        alert('Microphone permission denied.');
+                    }
+                }
+            };
+
+            useEffect(() => {
+                let interval;
+                if (isRecording) {
+                    interval = setInterval(() => setRecordingTime(t => t + 1), 1000);
+                }
+                return () => clearInterval(interval);
+            }, [isRecording]);
+
+            // Typing Indicator emit
+            useEffect(() => {
+                if (inputValue.length > 0 && socketRef.current?.connected) {
+                    socketRef.current.emit('typing');
+                    const timeout = setTimeout(() => socketRef.current.emit('stopTyping'), 2000);
+                    return () => clearTimeout(timeout);
+                }
+            }, [inputValue]);
+
+            const handleSend = () => {
+                if (!inputValue?.trim()) return;
+                const isUrdu = /[\u0600-\u06FF]/.test(inputValue);
+                const msgData = {
+                    text: isUrdu ? '' : inputValue,
+                    urduText: isUrdu ? inputValue : '',
+                    type: 'text'
+                };
+                
+                const localMsg = { ...msgData, id: Date.now(), sender: 'user', time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}), status: 'sent' };
+                setMessages(prev => [...prev, localMsg]);
+                setInputValue('');
+                setShowEmojiPicker(false);
+                setShowAttachMenu(false);
+                
+                if (socketRef.current?.connected) {
+                    socketRef.current.emit('sendMessage', msgData);
+                } else {
+                    setTimeout(() => {
+                        setMessages(prev => [...prev, { id: Date.now()+1, sender: 'bot', text: 'Backend disconnected.', type: 'text', time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) }]);
+                    }, 500);
+                }
+                if (inputRef.current) inputRef.current.focus();
+            };
+
+            const handleKeyPress = (e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    handleSend();
+                }
+            };
+
+            const handlePlayAudio = (fileUrl) => {
+                if (fileUrl) new Audio(fileUrl).play();
+            };
+
+            const handleCall = async (type) => {
+                setCallType(type);
+                setCallActive(true);
+                setCallTime(0);
+                if (socketRef.current?.connected) socketRef.current.emit('joinCall');
+                if (type === 'video') {
+                    try {
+                        const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+                        if (localVideoRef.current) localVideoRef.current.srcObject = stream;
+                    } catch (e) {
+                        console.error('Camera access denied');
+                    }
+                }
+            };
+
+            const handleEndCall = () => {
+                setCallActive(false);
+                if (socketRef.current?.connected) socketRef.current.emit('leaveCall');
+                if (localVideoRef.current?.srcObject) {
+                    localVideoRef.current.srcObject.getTracks().forEach(track => track.stop());
+                }
+            };
+
+            // Call Timer
+            useEffect(() => {
+                let interval;
+                if (callActive) interval = setInterval(() => setCallTime(t => t + 1), 1000);
+                return () => clearInterval(interval);
+            }, [callActive]);
+
+            const emojis = ['😊','😂','🤣','❤️','😍','😒','👌','😘','💕','😁','👍','🙌','🤦','🤷','✌️','😎','😢','🔥','🤔','💯','🤖','✨','🌟','🎉','👋','🙏'];
+            const isTypingUrdu = /[\u0600-\u06FF]/.test(inputValue) || language === 'UR';
+
+            return (
+                <div className={`flex h-[100dvh] w-full overflow-hidden relative ${theme === 'dark' ? 'bg-[#0a0a0f] text-white' : 'bg-[#f0f2f5] text-gray-900'}`}>
+                    {theme === 'dark' && (
+                        <>
+                            <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] rounded-full bg-neon-purple opacity-20 blur-[150px] pointer-events-none"></div>
+                            <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] rounded-full bg-neon-blue opacity-20 blur-[150px] pointer-events-none"></div>
+                        </>
+                    )}
+
+                    {/* Sidebar */}
+                    <aside className={`
+                        ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
+                        fixed lg:relative z-30 w-[85%] sm:w-80 h-full flex flex-col transition-transform duration-300 ease-in-out border-r
+                        ${theme === 'dark' ? 'glass-panel border-white/10' : 'bg-white border-gray-200'}
+                    `}>
+                        <div className={`p-4 flex items-center justify-between border-b ${theme === 'dark' ? 'border-white/5' : 'border-gray-100 bg-gray-50'}`}>
+                            <div className="flex items-center gap-3">
+                                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-neon-blue to-neon-purple flex items-center justify-center shadow-lg">
+                                    <Icon name="psychology" className="text-white text-2xl" />
+                                </div>
+                                <h1 className={`text-xl font-bold tracking-wide ${theme === 'dark' ? 'text-gradient' : 'text-gray-800'}`}>Laiba AI</h1>
+                            </div>
+                            {isMobile && (
+                                <button onClick={() => setIsSidebarOpen(false)} className={`p-1 rounded-md ${theme === 'dark' ? 'text-gray-400 hover:text-white hover:bg-white/10' : 'text-gray-500 hover:bg-gray-200'}`}>
+                                    <Icon name="close" />
+                                </button>
+                            )}
+                        </div>
+
+                        <div className="p-4">
+                            <button onClick={() => setMessages([])} className={`w-full py-3.5 px-4 rounded-xl flex items-center justify-center gap-2 transition-all duration-300 group shadow-sm border ${theme === 'dark' ? 'bg-gradient-to-r from-neon-blue/20 to-neon-purple/20 hover:from-neon-blue/30 hover:to-neon-purple/30 border-white/10' : 'bg-blue-50 hover:bg-blue-100 border-blue-200 text-blue-700'}`}>
+                                <Icon name="add_circle" className={`group-hover:rotate-90 transition-transform duration-300 ${theme === 'dark' ? 'text-neon-blue' : 'text-blue-600'}`} />
+                                <span className="font-semibold tracking-wide">New Chat</span>
+                            </button>
+                        </div>
+
+                        <div className="flex-1 overflow-y-auto px-4 py-2 space-y-6 scrollbar-hide">
+                            <div>
+                                <h3 className={`text-[11px] font-bold uppercase tracking-widest mb-3 px-2 ${theme === 'dark' ? 'text-gray-400/80' : 'text-gray-500'}`}>Tools</h3>
+                                <div className="space-y-1.5">
+                                    <button onClick={() => handleCall('voice')} className={`w-full text-left px-3 py-3 rounded-xl flex items-center gap-3 transition-colors border ${theme === 'dark' ? 'hover:bg-white/5 border-transparent hover:border-white/5' : 'hover:bg-gray-50 border-transparent'}`}>
+                                        <div className="w-8 h-8 rounded-lg bg-green-500/10 flex items-center justify-center text-green-500"><Icon name="phone_in_talk" className="text-lg" /></div>
+                                        <span className={`text-sm font-medium ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>Voice Call</span>
+                                    </button>
+                                    <button onClick={() => handleCall('video')} className={`w-full text-left px-3 py-3 rounded-xl flex items-center gap-3 transition-colors border ${theme === 'dark' ? 'hover:bg-white/5 border-transparent hover:border-white/5' : 'hover:bg-gray-50 border-transparent'}`}>
+                                        <div className="w-8 h-8 rounded-lg bg-purple-500/10 flex items-center justify-center text-purple-500"><Icon name="videocam" className="text-lg" /></div>
+                                        <span className={`text-sm font-medium ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>Video Call</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className={`p-4 border-t mt-auto ${theme === 'dark' ? 'border-white/5 bg-dark-900/50' : 'border-gray-200 bg-gray-50'}`}>
+                            {/* Theme Toggle */}
+                            <div className="flex items-center justify-between mb-4 px-2">
+                                <span className={`text-sm font-medium ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>Theme</span>
+                                <button onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} className={`w-12 h-6 rounded-full relative transition-colors ${theme === 'dark' ? 'bg-neon-purple' : 'bg-gray-300'}`}>
+                                    <div className={`w-5 h-5 rounded-full bg-white absolute top-0.5 transition-transform ${theme === 'dark' ? 'translate-x-6' : 'translate-x-0.5'}`}></div>
+                                </button>
+                            </div>
+
+                            {/* Language Toggle */}
+                            <div className={`flex items-center justify-between p-1.5 rounded-xl border mb-2 ${theme === 'dark' ? 'bg-dark-800 border-white/5' : 'bg-white border-gray-200 shadow-sm'}`}>
+                                <span className={`text-xs font-medium px-3 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>Lang</span>
+                                <div className={`flex rounded-lg p-1 relative ${theme === 'dark' ? 'bg-black/50' : 'bg-gray-100'}`}>
+                                    <button onClick={() => setLanguage('EN')} className={`px-4 py-1.5 text-xs font-semibold rounded-md transition-all z-10 ${language === 'EN' ? 'text-white' : 'text-gray-400'}`}>EN</button>
+                                    <button onClick={() => setLanguage('UR')} className={`px-4 py-1.5 text-xs font-semibold rounded-md transition-all z-10 ${language === 'UR' ? 'text-white' : 'text-gray-400'}`}>UR</button>
+                                    <div className={`absolute top-1 bottom-1 w-[46%] rounded-md transition-transform duration-300 shadow-md ${theme === 'dark' ? 'bg-gradient-to-r from-neon-blue/80 to-neon-purple/80' : 'bg-blue-500'} ${language === 'EN' ? 'translate-x-0 left-1' : 'translate-x-full right-1'}`}></div>
+                                </div>
+                            </div>
+                        </div>
+                    </aside>
+
+                    {/* Main Content */}
+                    <main className={`flex-1 flex flex-col h-full relative z-10 w-full min-w-0 ${theme === 'dark' ? 'bg-[url("https://www.transparenttextures.com/patterns/cubes.png")] bg-fixed bg-overlay' : 'bg-[#efeae2]'}`}>
+                        
+                        {/* Header */}
+                        <header className={`h-16 lg:h-[72px] flex items-center justify-between px-3 lg:px-6 border-b shrink-0 z-20 ${theme === 'dark' ? 'glass border-white/5' : 'bg-white border-gray-200 shadow-sm'}`}>
+                            <div className="flex items-center gap-3">
+                                {!isSidebarOpen && (
+                                    <button onClick={() => setIsSidebarOpen(true)} className={`p-2 rounded-lg transition ${theme === 'dark' ? 'text-gray-400 hover:text-white hover:bg-white/5' : 'text-gray-600 hover:bg-gray-100'}`}>
+                                        <Icon name="menu" className="text-2xl" />
+                                    </button>
+                                )}
+                                <div className="flex items-center gap-3">
+                                    <div className="relative">
+                                        <div className={`w-10 h-10 lg:w-12 lg:h-12 rounded-full flex items-center justify-center overflow-hidden border ${theme === 'dark' ? 'bg-dark-800 border-white/20' : 'bg-gray-100 border-gray-200'}`}>
+                                            <Icon name="robot_2" className={`text-2xl lg:text-3xl ${theme === 'dark' ? 'text-neon-blue' : 'text-blue-500'}`} />
+                                        </div>
+                                        <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white dark:border-dark-900"></div>
+                                    </div>
+                                    <div>
+                                        <h2 className="text-[16px] lg:text-lg font-bold leading-tight tracking-wide">Laiba AI</h2>
+                                        <p className="text-[11px] lg:text-xs text-green-500 font-medium">Online</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="flex items-center gap-1.5 lg:gap-3">
+                                <button onClick={() => handleCall('voice')} className={`w-9 h-9 lg:w-10 lg:h-10 rounded-full flex items-center justify-center transition border ${theme === 'dark' ? 'bg-white/5 hover:bg-white/10 text-gray-300 border-white/5' : 'bg-gray-50 hover:bg-gray-100 text-gray-600 border-gray-200'}`}>
+                                    <Icon name="call" className="text-[20px]" />
+                                </button>
+                                <button onClick={() => handleCall('video')} className={`w-9 h-9 lg:w-10 lg:h-10 rounded-full flex items-center justify-center transition border ${theme === 'dark' ? 'bg-white/5 hover:bg-white/10 text-gray-300 border-white/5' : 'bg-gray-50 hover:bg-gray-100 text-gray-600 border-gray-200'}`}>
+                                    <Icon name="videocam" className="text-[20px]" />
+                                </button>
+                            </div>
+                        </header>
+
+                        {/* Chat Area */}
+                        <div className={`flex-1 overflow-y-auto p-4 lg:p-8 space-y-6 scrollbar-hide relative z-10 ${theme === 'light' ? 'bg-[url("https://web.whatsapp.com/img/bg-chat-tile-light_04fcacde539c58cca6745483d4858c52.png")] bg-repeat opacity-95' : ''}`}>
+                            {messages.map((msg) => (
+                                <div key={msg.id} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'} message-enter`}>
+                                    <div className={`flex gap-2 max-w-[85%] lg:max-w-[65%] ${msg.sender === 'user' ? 'flex-row-reverse' : 'flex-row'}`}>
+                                        
+                                        {msg.sender === 'bot' && (
+                                            <div className="hidden sm:flex w-8 h-8 rounded-full bg-gradient-to-br from-neon-blue to-neon-purple items-center justify-center shrink-0 mt-1 shadow-md">
+                                                <Icon name="psychology" className="text-white text-[16px]" />
+                                            </div>
+                                        )}
+                                        
+                                        <div className={`flex flex-col ${msg.sender === 'user' ? 'items-end' : 'items-start'}`}>
+                                            <div className={`
+                                                px-3.5 py-2 lg:px-4 lg:py-3 rounded-2xl text-[15px] leading-relaxed relative shadow-sm
+                                                ${msg.sender === 'user' 
+                                                    ? (theme === 'dark' ? 'bg-gradient-to-br from-neon-blue/90 to-blue-600/90 rounded-tr-sm text-white' : 'bg-[#d9fdd3] rounded-tr-sm text-gray-900 border border-green-200')
+                                                    : (theme === 'dark' ? 'glass rounded-tl-sm text-white' : 'bg-white rounded-tl-sm text-gray-900 border border-gray-200')
+                                                }
+                                            `}>
+                                                {msg.type === 'text' && (
+                                                    <div className="space-y-1">
+                                                        {msg.text && <p className="whitespace-pre-wrap break-words">{msg.text}</p>}
+                                                        {msg.urduText && (
+                                                            <div className={`${msg.text ? 'pt-2 mt-2 border-t border-black/10 dark:border-white/10' : ''}`}>
+                                                                <p className="urdu-text text-lg lg:text-xl drop-shadow-sm">{msg.urduText}</p>
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                )}
+
+                                                {msg.type === 'image' && (
+                                                    <div className="mt-1 mb-2">
+                                                        <img src={msg.fileUrl} alt="attachment" className="max-w-[200px] lg:max-w-[250px] rounded-lg shadow-sm border border-black/5" />
+                                                    </div>
+                                                )}
+
+                                                {(msg.type === 'file' || (msg.type === 'text' && msg.fileUrl)) && (
+                                                    <a href={msg.fileUrl} target="_blank" rel="noreferrer" className={`flex items-center gap-2 p-2 rounded-lg mt-1 mb-1 ${theme === 'dark' ? 'bg-black/20' : 'bg-black/5'} hover:opacity-80 transition`}>
+                                                        <Icon name="description" className="text-2xl" />
+                                                        <span className="text-sm font-medium underline truncate max-w-[150px]">Download File</span>
+                                                    </a>
+                                                )}
+
+                                                {msg.type === 'audio' && (
+                                                    <div className="flex items-center gap-3 w-56 md:w-64 py-1">
+                                                        <button onClick={() => handlePlayAudio(msg.fileUrl)} className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors ${theme === 'dark' ? 'bg-neon-blue/20 text-neon-blue' : 'bg-green-500 text-white shadow-md'}`}>
+                                                            <Icon name="play_arrow" className="text-2xl" />
+                                                        </button>
+                                                        <div className="flex-1 flex items-center justify-between gap-1 h-6">
+                                                            {[1, 2, 4, 3, 5, 2, 6, 4, 2, 3, 5].map((h, i) => (
+                                                                <div key={i} className={`w-[3px] rounded-full opacity-80 ${theme === 'dark' ? 'bg-neon-blue' : 'bg-gray-400'}`} style={{height: `${h * 15}%`}}></div>
+                                                            ))}
+                                                        </div>
+                                                        <span className="text-xs font-medium opacity-70 ml-1">{msg.duration || '0:05'}</span>
+                                                    </div>
+                                                )}
+
+                                                <div className={`text-[10px] lg:text-[11px] font-medium opacity-60 mt-1 flex items-center gap-1 justify-end ${msg.sender === 'user' ? 'text-right' : 'text-left'}`}>
+                                                    {msg.time}
+                                                    {msg.sender === 'user' && (
+                                                        <Icon name="done_all" className={`text-[14px] ${msg.status === 'seen' ? (theme === 'dark' ? 'text-neon-blue' : 'text-blue-500') : 'text-gray-400'}`} />
+                                                    )}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                            {isBotTyping && (
+                                <div className="flex justify-start message-enter">
+                                    <div className={`px-4 py-3 rounded-2xl rounded-tl-sm flex items-center gap-2 shadow-sm ${theme === 'dark' ? 'glass border border-white/10' : 'bg-white border border-gray-200'}`}>
+                                        <div className={`w-2 h-2 rounded-full animate-bounce ${theme === 'dark' ? 'bg-neon-blue' : 'bg-gray-400'}`} style={{animationDelay: '0ms'}}></div>
+                                        <div className={`w-2 h-2 rounded-full animate-bounce ${theme === 'dark' ? 'bg-neon-blue' : 'bg-gray-400'}`} style={{animationDelay: '150ms'}}></div>
+                                        <div className={`w-2 h-2 rounded-full animate-bounce ${theme === 'dark' ? 'bg-neon-blue' : 'bg-gray-400'}`} style={{animationDelay: '300ms'}}></div>
+                                    </div>
+                                </div>
+                            )}
+                            <div ref={messagesEndRef} className="h-4" />
+                        </div>
+
+                        {/* Input Area */}
+                        <div className={`p-2 lg:p-4 shrink-0 z-20 pb-4 lg:pb-6 relative ${theme === 'dark' ? 'glass border-t border-white/5' : 'bg-[#f0f2f5] border-t border-gray-300'}`}>
+                            
+                            {/* Pickers */}
+                            {showEmojiPicker && (
+                                <div className={`absolute bottom-full left-4 mb-2 p-3 rounded-xl shadow-xl flex flex-wrap gap-2 w-64 z-50 ${theme === 'dark' ? 'bg-dark-800 border border-white/10' : 'bg-white border border-gray-200'}`}>
+                                    {emojis.map(e => <span key={e} onClick={() => setInputValue(v => v + e)} className="text-2xl cursor-pointer hover:scale-125 transition-transform">{e}</span>)}
+                                </div>
+                            )}
+
+                            {showAttachMenu && (
+                                <div className={`absolute bottom-full left-14 mb-2 p-2 rounded-xl shadow-xl flex flex-col gap-2 w-48 z-50 message-enter ${theme === 'dark' ? 'bg-dark-800 border border-white/10' : 'bg-white border border-gray-200'}`}>
+                                    <button onClick={() => fileInputRef.current?.click()} className={`flex items-center gap-3 p-2 rounded-lg transition ${theme === 'dark' ? 'hover:bg-white/10' : 'hover:bg-gray-100'}`}>
+                                        <div className="w-10 h-10 rounded-full bg-indigo-500 text-white flex items-center justify-center"><Icon name="insert_drive_file" /></div>
+                                        <span className="font-medium text-sm">Document</span>
+                                    </button>
+                                    <button onClick={() => { fileInputRef.current.accept = "image/*"; fileInputRef.current.click(); }} className={`flex items-center gap-3 p-2 rounded-lg transition ${theme === 'dark' ? 'hover:bg-white/10' : 'hover:bg-gray-100'}`}>
+                                        <div className="w-10 h-10 rounded-full bg-blue-500 text-white flex items-center justify-center"><Icon name="image" /></div>
+                                        <span className="font-medium text-sm">Photos & Videos</span>
+                                    </button>
+                                    <button onClick={() => cameraInputRef.current?.click()} className={`flex items-center gap-3 p-2 rounded-lg transition ${theme === 'dark' ? 'hover:bg-white/10' : 'hover:bg-gray-100'}`}>
+                                        <div className="w-10 h-10 rounded-full bg-pink-500 text-white flex items-center justify-center"><Icon name="photo_camera" /></div>
+                                        <span className="font-medium text-sm">Camera</span>
+                                    </button>
+                                </div>
+                            )}
+
+                            <div className="max-w-5xl mx-auto flex items-end gap-2 relative">
+                                <input type="file" ref={fileInputRef} className="hidden" onChange={handleFileUpload} />
+                                <input type="file" ref={cameraInputRef} className="hidden" accept="image/*" capture="environment" onChange={handleFileUpload} />
+                                
+                                <button onClick={() => {setShowAttachMenu(false); setShowEmojiPicker(!showEmojiPicker)}} className={`w-10 h-10 lg:w-12 lg:h-12 rounded-full flex items-center justify-center transition-colors shrink-0 ${theme === 'dark' ? 'text-gray-400 hover:bg-white/5 hover:text-white' : 'text-gray-500 hover:bg-black/5 hover:text-gray-700'}`}>
+                                    <Icon name={showEmojiPicker ? 'close' : 'sentiment_satisfied'} className="text-[24px] lg:text-[26px]" />
+                                </button>
+
+                                <button onClick={() => {setShowEmojiPicker(false); setShowAttachMenu(!showAttachMenu)}} className={`w-10 h-10 lg:w-12 lg:h-12 rounded-full flex items-center justify-center transition-colors shrink-0 ${theme === 'dark' ? 'text-gray-400 hover:bg-white/5 hover:text-white' : 'text-gray-500 hover:bg-black/5 hover:text-gray-700'}`}>
+                                    <Icon name="attach_file" className="text-[24px] lg:text-[26px] transform -rotate-45" />
+                                </button>
+                                
+                                {/* Input Box */}
+                                <div className={`flex-1 rounded-3xl flex items-end p-2 transition-all shadow-sm ${theme === 'dark' ? 'bg-dark-800 border border-white/10 focus-within:border-neon-blue/50' : 'bg-white border border-gray-300 focus-within:border-blue-400'}`}>
+                                    
+                                    {isRecording ? (
+                                        <div className="flex-1 flex items-center gap-3 px-4 min-h-[40px] animate-pulse text-red-500 font-medium">
+                                            <Icon name="mic" className="text-xl" />
+                                            <span>Recording: {Math.floor(recordingTime / 60).toString().padStart(2, '0')}:{(recordingTime % 60).toString().padStart(2, '0')}</span>
+                                        </div>
+                                    ) : (
+                                        <textarea 
+                                            ref={inputRef}
+                                            value={inputValue}
+                                            onChange={(e) => setInputValue(e.target.value)}
+                                            onKeyDown={handleKeyPress}
+                                            placeholder={language === 'EN' ? "Type a message..." : "پیغام لکھیں..."}
+                                            className={`flex-1 bg-transparent border-none outline-none min-h-[40px] max-h-32 resize-none px-2 py-2 text-[15px] lg:text-[16px] ${theme === 'dark' ? 'text-white placeholder-gray-500' : 'text-gray-900 placeholder-gray-500'} ${isTypingUrdu ? 'urdu-text text-lg' : ''}`}
+                                            rows="1"
+                                        />
+                                    )}
+                                </div>
+
+                                {/* Send / Mic Button */}
+                                {inputValue.trim() ? (
+                                    <button 
+                                        onClick={handleSend}
+                                        className={`w-12 h-12 rounded-full flex items-center justify-center text-white transition-all transform shrink-0 mb-0.5 shadow-md hover:scale-105 ${theme === 'dark' ? 'bg-gradient-to-r from-neon-blue to-neon-purple' : 'bg-[#00a884]'}`}
+                                    >
+                                        <Icon name="send" className={`text-[22px] ${isTypingUrdu ? 'transform -scale-x-100' : ''} ml-1`} />
+                                    </button>
+                                ) : (
+                                    <button 
+                                        onClick={toggleRecording}
+                                        className={`w-12 h-12 rounded-full flex items-center justify-center text-white transition-all transform shrink-0 mb-0.5 shadow-md ${isRecording ? 'bg-red-500 animate-bounce' : (theme === 'dark' ? 'bg-gradient-to-r from-neon-blue to-neon-purple' : 'bg-[#00a884]')}`}
+                                    >
+                                        <Icon name={isRecording ? 'stop' : 'mic'} className="text-[24px]" />
+                                    </button>
+                                )}
+                            </div>
+                        </div>
+                    </main>
+                    
+                    {/* Mobile Overlay */}
+                    {isSidebarOpen && isMobile && (
+                        <div 
+                            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-20"
+                            onClick={() => setIsSidebarOpen(false)}
+                        ></div>
+                    )}
+
+                    {/* Call Overlay UI */}
+                    {callActive && (
+                        <div className="fixed inset-0 bg-dark-900 z-[100] flex flex-col items-center justify-center">
+                            {callType === 'video' ? (
+                                <video ref={localVideoRef} autoPlay muted className="absolute inset-0 w-full h-full object-cover opacity-60"></video>
+                            ) : (
+                                <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-dark-800 to-dark-900 flex items-center justify-center">
+                                    <div className="w-32 h-32 lg:w-40 lg:h-40 rounded-full border-[4px] lg:border-[6px] border-neon-blue bg-dark-800 flex items-center justify-center animate-pulse shadow-[0_0_80px_rgba(0,240,255,0.4)]">
+                                        <Icon name="robot_2" className="text-6xl lg:text-7xl text-neon-blue" />
+                                    </div>
+                                </div>
+                            )}
+                            
+                            <div className="relative z-10 flex flex-col items-center mt-auto mb-10 lg:mb-20 bg-dark-900/60 p-6 lg:p-8 rounded-3xl backdrop-blur-md border border-white/10 w-full max-w-sm mx-4 text-center shadow-2xl">
+                                <h2 className="text-2xl lg:text-3xl font-bold text-white mb-1 lg:mb-2 tracking-wide">Laiba AI</h2>
+                                <p className="text-green-400 font-semibold mb-8 lg:mb-12 text-lg">
+                                    {Math.floor(callTime / 60).toString().padStart(2, '0')}:{(callTime % 60).toString().padStart(2, '0')}
+                                </p>
+                                
+                                <div className="flex items-center justify-center gap-6 lg:gap-8">
+                                    <button onClick={() => setIsMuted(!isMuted)} className={`w-14 h-14 lg:w-16 lg:h-16 rounded-full flex items-center justify-center transition-all ${isMuted ? 'bg-white text-dark-900' : 'bg-white/10 text-white hover:bg-white/20 border border-white/20'}`}>
+                                        <Icon name={isMuted ? "mic_off" : "mic"} className="text-2xl lg:text-3xl" />
+                                    </button>
+                                    <button onClick={handleEndCall} className="w-16 h-16 lg:w-20 lg:h-20 rounded-full bg-red-500 hover:bg-red-600 flex items-center justify-center text-white transition-all shadow-[0_0_30px_rgba(239,68,68,0.5)] hover:scale-105">
+                                        <Icon name="call_end" className="text-3xl lg:text-4xl" />
+                                    </button>
+                                    <button className="w-14 h-14 lg:w-16 lg:h-16 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-all border border-white/20">
+                                        <Icon name="volume_up" className="text-2xl lg:text-3xl" />
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
 </body>
 </html>
